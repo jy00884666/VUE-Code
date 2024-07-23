@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 准备元素div被VUE控制 -->
+    <!-- 通过插值表达式渲染页面 -->
+    <div id="app">{{ message }}</div>
+
+    <!-- 只会渲染第一个 -->
+    <div id="app">
+        <h1>{{ message }}</h1>
+    </div>
+
+    <!-- 引入VUE模块 -->
+    <script type="module">
+        // createApp函数,from引入关键字
+        import { createApp, ref } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        /*创建VUE应用实例*/
+        createApp({
+            /*准备数据*/
+            /**
+             * 方法一
+             * Vue2的data 方法是 Vue 实例的一个选项，‌用于定义组件的初始状态。‌经过测试先执行setup方法在执行data方法,但是页面值显示的是 Hello Vue2!
+             */
+            data() {
+                return {
+                    message: "Hello Vue!"
+                };
+            },
+
+            /**
+             * 方法二
+             * Vue3的setup 方法是 Composition API 的入口点，‌它在组件实例化之前执行,在setup内部你可以使用,ref,reactive,computed等函数来定义状态
+             * ref ：用于创建响应式的基本类型（如 number,string,boolean)
+             */
+            setup() {
+                // vue.js 中的 const 关键字用于声明常量变量
+                const message = ref('Hello Vue2!');
+                return {
+                    message
+                };
+            }
+
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

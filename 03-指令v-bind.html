@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<!-- v-bind指令为HTML动态绑定属性值 -->
+
+<body>
+
+    <div id="app">
+        <!-- 标准写法 -->
+        <a v-bind:href="url">百度测试</a>
+        <br/>
+        <!-- 简化写法 -->
+        <a :href="url">百度测试</a>
+    </div>
+
+    <!-- 引入VUE模块 -->
+    <script type="module">
+        // createApp函数,from引入关键字
+        import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        /*创建VUE应用实例*/
+        createApp({
+            data() {
+                // 定义数据
+                return {
+                    url: "https://www.baidu.com/"
+                };
+            }
+        }).mount("#app");//控制页面元素
+    </script>
+</body>
+
+</html>
