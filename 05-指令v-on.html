@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<!-- 
+    v-on 作用:为html标签绑定事件
+            函数需要定义在methods选项内部
+-->
+
+<body>
+
+    <div id="app">
+        <!-- 标准写法 -->
+        <button v-on:click="money">点我有惊喜</button><br />
+        <!-- 简写写法 -->
+        <button @click="integral">再点更惊喜</button>
+
+    </div>
+
+    <!-- 引入VUE模块 -->
+    <script type="module">
+        // createApp函数,from引入关键字
+        import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        /*创建VUE应用实例*/
+        createApp({
+            // 需要用到的数据
+            data() {
+                // 定义数据
+                return {
+
+                };
+            },
+            // 需要用到的方法
+            methods: {
+                money: function () {
+                    alert("送金币100");
+                },
+                integral: function () {
+                    alert("送积分100");
+                }
+            }
+        }).mount("#app");//控制页面元素
+    </script>
+</body>
+
+</html>

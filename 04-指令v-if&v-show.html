@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<!-- 
+    v-if&v-show作用:这两类指令，都是用来控制元素的显示与隐藏的 
+        v-if 原理:基于条件判断，来控制创建或移除元素节点(条件渲染)
+             场景:要么显示，要么不显示，不频繁切换的场景
+        
+        v-show  原理:基于CSS样式display来控制显示与隐藏
+                场景:频繁切换显示隐藏的场景
+
+-->
+
+<body>
+
+    <div id="app">
+        手链价格为:
+        <span v-if="customer.level >=0 && customer.level <= 1">9.9</span>
+        <span v-else-if="customer.level > 1 && customer.level <= 4">19.9</span>
+        <span v-else>29.9</span>
+
+        <br />
+
+        手链价格为:
+        <span v-show="customer.level >=0 && customer.level <= 1">9.9</span>
+        <span v-show="customer.level > 1 && customer.level <= 4">19.9</span>
+        <span v-show="customer.level >= 5">29.9</span>
+    </div>
+
+    <!-- 引入VUE模块 -->
+    <script type="module">
+        // createApp函数,from引入关键字
+        import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        /*创建VUE应用实例*/
+        createApp({
+            data() {
+                // 定义数据
+                return {
+                    customer: {
+                        name: "张三",
+                        level: 2
+                    }
+                };
+            }
+        }).mount("#app");//控制页面元素
+    </script>
+</body>
+
+</html>

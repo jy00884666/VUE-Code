@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<!-- 
+    v-model 作用:在表单元素上使用，双向数据绑定。可以方便的获取或设置表单项数据
+                v-model指令只能作用于<input>, <textarea> and <select> 这三个元素
+-->
+
+<body>
+
+    <div id="app">
+        <!-- 利用插值表达式文本框里输入什么<span>里面就会显示什么,证明 searchConditions 对象中的 category 双向绑定成功 -->
+        文章分类:<input type="text" v-model="searchConditions.category" />
+        <span>{{searchConditions.category}}</span>
+        <br />
+        <!--  -->
+        发布状态:<input type="text" v-model="searchConditions.state">
+        <span>{{searchConditions.state}}</span>
+        <br />
+
+        <button v-on:click="search">搜索</button>
+        <button v-on:click="clear">重制</button>
+
+        <br />
+        <br />
+
+        <table border="1 solid" colspan="0" cellspacing="0">
+            <tr>
+                <th>文章标题</th>
+                <th>分类</th>
+                <th>发表时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(article,index) in articleList">
+                <td>{{article.title}}</td>
+                <td>{{article.category}}</td>
+                <td>{{article.time}}</td>
+                <td>{{article.state}}</td>
+                <td>
+                    <button>编辑</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 引入VUE模块 -->
+    <script type="module">
+        // createApp函数,from引入关键字
+        import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+        /*创建VUE应用实例*/
+        createApp({
+            // 需要用到的数据
+            data() {
+                // 定义数据
+                return {
+                    searchConditions: {
+                        category: "",
+                        state: ""
+                    },
+                    articleList: [{
+                        title: "医疗反腐绝非砍医护收入",
+                        category: "时事1",
+                        time: "2023-09-5",
+                        state: "已发布5"
+                    },
+                    {
+                        title: "中国劈篮缘何一败涂地?",
+                        category: "篮球1",
+                        time: "2023-09-5",
+                        state: "草稿6"
+                    },
+                    {
+                        title: "华山景区已受大风影响阵风达7-8级,未来24小时将持续",
+                        category: "旅游2",
+                        time: " 2023-09-5",
+                        state: "已发布7"
+                    }]
+                };
+            },
+            // 需要用到的方法
+            methods: {
+                /*搜索按钮*/
+                search: function () {
+                    // 复制集合,slice 方法
+                    //var copyItem = this.articleList.slice();
+                    // 模糊查询 分类
+                    if (this.searchConditions.category != undefined && this.searchConditions.category != null && this.searchConditions.category != '') {
+                        for (let i = 0; i < this.articleList.length; i++) {
+                            // const 定义常量
+                            const article = this.articleList[i];
+                            if (article.category.indexOf(this.searchConditions.category) < 0) {
+                                // splice 删除集合元素,入参一:删除下标,入参二:删除数量
+                                this.articleList.splice(i, 1);
+                                // 集合下标删除后会位移,为了防止下标位移这里需要i--
+                                i--;
+                            }
+                        }
+                    }
+                    // 模糊查询 状态
+                    if (this.searchConditions.state != undefined && this.searchConditions.state != null && this.searchConditions.state != '') {
+                        for (let i = 0; i < this.articleList.length; i++) {
+                            // const 定义常量
+                            const article = this.articleList[i];
+                            if (article.state.indexOf(this.searchConditions.state) < 0) {
+                                // splice 删除集合元素,入参一:删除下标,入参二:删除数量
+                                this.articleList.splice(i, 1);
+                                // 集合下标删除后会位移,为了防止下标位移这里需要i--
+                                i--;
+                            }
+                        }
+                    }
+                },
+                /*重制按钮,清空数据*/
+                clear: function () {
+                    // 在methods对应的方法里面,使用this就代表的是vue实例,可以使用this获取到vue实例中准备的数据
+                    this.searchConditions.category = "";
+                    this.searchConditions.state = "";
+                }
+            }
+        }).mount("#app");//控制页面元素
+    </script>
+</body>
+
+</html>
