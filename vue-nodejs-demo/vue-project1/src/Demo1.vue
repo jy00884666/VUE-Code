@@ -1,4 +1,15 @@
-<!-- 方法一:写数据,export default是默认导出关键字,这里是默认导出对象把对象暴露出去 -->
+<!-- 使用插值表达式 {{ msg }} 页面实现值 -->
+
+
+
+
+<!-- 方法一:写数据
+        export default：用于导出模块的默认值，这里是将data对象暴露出去给插值表达式使用
+        export: 命名导出使用export关键字后跟变量名或函数名。一个模块只能有一个默认导出，但可以有多个命名导出，需要为它们指定名称。这些名称将在其他模块中用于导入
+        export 与 export default 在导入时的区别:
+                                                export--import 当使用命名导入时，必须确保导入的名称与导出模块中定义的名称完全匹配
+                                                export default--可以为导入的模块指定任何名称，因为 export default 允许你在导入时使用任意名称
+ -->
 <script>
 export default {
     data() {
