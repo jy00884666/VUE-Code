@@ -27,7 +27,7 @@ const searchConditions = ref({
     state: ""
 });
 
-// 获取列表数据请求,别名方式发送请求,推荐
+// 异步获取列表数据请求,别名方式发送请求,推荐
 axios.post("http://localhost:8080/articleController/getAll").then(result => {
     // 成功的回调
     // result 表示服务器响应的所有的数据,包含了响应头,响应体,result.data 代表的是接口响应的核心数据
