@@ -15,11 +15,18 @@ import { createRouter, createWebHistory } from 'vue-router';
 // 导入组件
 import Demo1 from '@/Demo1.vue';
 import Demo2 from '@/Demo2.vue';
+import UserInfoVue from '@/user/UserInfo.vue';
 
 // 定义路由关系
 const routes = [
     { path: '/', component: Demo1 },
-    { path: '/Demo2', component: Demo2 }
+    {
+        path: '/Demo2', component: Demo2,
+        // 配置子路由
+        children: [
+            { path: '/user/userInfo', component: UserInfoVue }
+        ]
+    }
 ];
 
 // 创建路由器
