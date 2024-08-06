@@ -31,7 +31,7 @@ getAllArticle();
 
 /*申明 搜索按钮*/
 const search = async function () {
-    let data = await articleControllerSearchService();
+    let data = await articleControllerSearchService(searchConditions.value);
     articleList.value = data;
 }
 
