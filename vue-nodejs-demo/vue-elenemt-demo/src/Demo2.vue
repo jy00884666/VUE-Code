@@ -1,7 +1,8 @@
 <!-- Container 布局容器 整合 menu 菜单 -->
 <template>
     <div class="common-layout">
-        <el-container>
+        <!-- 整体布局 -->
+        <el-container  class="layout-container">
             <!-- 左侧菜单 -->
             <el-aside width="400px">
                 <!-- 菜单标签,router:表示点击跳转的连接,配置子路由器时填写连接地址 -->
@@ -49,7 +50,7 @@
                             </el-menu-item>
                         </el-sub-menu>
                     </el-sub-menu>
-                    <el-menu-item index="2">
+                    <el-menu-item index="/article/articleCategory">
                         <el-icon>
                             <IconMenu />
                         </el-icon>
@@ -130,49 +131,61 @@ const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath);
 }
 
-/* 头像样式导入 */
-import { reactive, toRefs } from 'vue'
+/** 头像样式导入 */
+import { reactive, toRefs } from 'vue';
 
 const state = reactive({
     avatar:
         'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-})
+});
 
-const { avatar } = toRefs(state)
+const { avatar } = toRefs(state);
 
 </script>
 
 <style>
-/* 顶部区域样式 */
-.el-header {
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .el-dropdown__box {
-        display: flex;
-        align-items: center;
-
-        .el-icon {
-            color: #999;
-            margin-left: 10px;
-        }
-
-        &:active,
-        &:focus {
-            outline: none;
+/* 整体布局样式 */
+.layout-container {
+    height: 100vh;
+    /* 左侧菜单 */
+    .el-aside {
+        background-color: #e4e2e2;
+        /* 左侧树样式 */
+        .el-menu {
+            border-right: none;
         }
     }
-}
 
-/* 底部区域样式 */
-.el-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #666;
-}
+    /* 顶部区域样式 */
+    .el-header {
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
+        .el-dropdown__box {
+            display: flex;
+            align-items: center;
+
+            .el-icon {
+                color: #999;
+                margin-left: 10px;
+            }
+
+            &:active,
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    /* 底部区域样式 */
+    .el-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #666;
+    }
+}
 </style>

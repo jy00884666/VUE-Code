@@ -16,15 +16,21 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Demo1 from '@/Demo1.vue';
 import Demo2 from '@/Demo2.vue';
 import UserInfoVue from '@/user/UserInfo.vue';
+import ArticleCategory from '@/article/ArticleCategory.vue';
 
 // 定义路由关系
 const routes = [
+    /* 首页访问Demo1.vue */
     { path: '/', component: Demo1 },
     {
+        /* 指定/Demo2路径时跳转Demo2.vue */
         path: '/Demo2', component: Demo2,
-        // 配置子路由
+        /* 配置子路由,在Demo2中再度访问某个路径时跳转如下配置*/
         children: [
-            { path: '/user/userInfo', component: UserInfoVue }
+            /* 用户个人信息 */
+            { path: '/user/userInfo', component: UserInfoVue },
+            /* 文章分类管理 */
+            { path: '/article/articleCategory', component: ArticleCategory }
         ]
     }
 ];
