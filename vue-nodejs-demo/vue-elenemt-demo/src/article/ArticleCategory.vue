@@ -38,15 +38,34 @@ const rules = {
 }
 
 //调用接口,添加表单
-import { ElMessage } from 'element-plus'
-const addCategory = async () => {
-    //调用接口
-    let result = await articleCategoryAddService(categoryModel.value);
-    ElMessage.success(result.msg ? result.msg : '添加成功')
+import { ElMessage } from 'element-plus';
 
-    //调用获取所有文章分类的函数
-    articleCategoryList();
-    dialogVisible.value = false;
+/**表单验证响应式对象 在form表单中通过ref属性标识一下 */
+const articleObjRef = ref(null);
+
+/**添加文章分类 */
+const addCategory = async () => {
+    /**对整个表单内容进行一次统一验证
+     * 此方法接收一个回调函数
+     * 第一个参数:是布尔类型，当所有的校验规则都通过时，此值是true，否则false
+     * 第二个参数:是校验未通过的所有字段的数组 
+     * */
+    await articleObjRef.value.validate((isValid, invalidFields) => {
+        // 校验通过
+        if (isValid) {
+            //调用接口
+            let result = articleCategoryAddService(categoryModel.value);
+            ElMessage.success(result.msg ? result.msg : '添加成功')
+
+            //调用获取所有文章分类的函数
+            articleCategoryList();
+            dialogVisible.value = false;
+        } else {
+            // 校验不通过
+            console.log(invalidFields);
+            ElMessage.error("验证失败请检查");
+        }
+    });
 }
 
 //定义变量,控制标题的展示
@@ -54,7 +73,9 @@ const title = ref('')
 
 //展示编辑弹窗
 const showDialog = (row) => {
-    dialogVisible.value = true; title.value = '编辑分类'
+    /* 在标签上可以直接使用 dialogVisible=true;title="编辑分类",js方法中需要使用.value属性赋值 */
+    dialogVisible.value = true;
+    title.value = '编辑分类';
     //数据拷贝
     categoryModel.value.categoryName = row.categoryName;
     categoryModel.value.categoryAlias = row.categoryAlias;
@@ -127,6 +148,7 @@ const deleteCategory = (row) => {
             <el-table-column label="分类名称" prop="categoryName"></el-table-column>
             <el-table-column label="分类别名" prop="categoryAlias"></el-table-column>
             <el-table-column label="操作" width="100">
+                <!-- row 编辑行对象 -->
                 <template #default="{ row }">
                     <el-button :icon="Edit" circle plain type="primary" @click="showDialog(row)"></el-button>
                     <el-button :icon="Delete" circle plain type="danger" @click="deleteCategory(row)"></el-button>
@@ -139,7 +161,8 @@ const deleteCategory = (row) => {
 
         <!-- 添加分类弹窗 -->
         <el-dialog v-model="dialogVisible" :title="title" width="30%">
-            <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px">
+            <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px"
+                ref="articleObjRef">
                 <el-form-item label="分类名称" prop="categoryName">
                     <el-input v-model="categoryModel.categoryName" minlength="1" maxlength="10"></el-input>
                 </el-form-item>
